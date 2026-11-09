@@ -80,7 +80,7 @@ No attachment decoding or re-rendering is performed; the raw bytes are passed th
 | TARGET_URL           | yes      | -       | https://.../send on http2smtp                               |
 | API_KEY              | yes      | -       | Shared secret                                               |
 | SMTP_DOMAIN          | yes      | -       | Domain for the self-signed certificate and SMTP greeting    |
-| SMTP_USERS_<service> | yes      | -       | `user:pass` allowed LOGIN credential; repeat for each client |
+| `SMTP_USERS_<service>` | yes    | -       | One allowed LOGIN credential per client, as `username:password`. Replace `<service>` with any label, e.g. `SMTP_USERS_BILLING=billing:secret` |
 | PORT                 | no       | 8080    | HTTP health listener                                        |
 | SMTP_TLS_DNS_NAMES   | no       | -       | Comma-separated extra DNS names for the self-signed certificate, added to `localhost`, `smtp2http`, `*.internal` and `SMTP_DOMAIN` |
 
@@ -170,7 +170,7 @@ docker run -d --name http2smtp \
 
 - Put behind HTTPS (reverse proxy, Cloudflare Tunnel, Tailscale, etc.).
 - Give it a stable DNS name; point `smtp2http` `TARGET_URL` at `https://<host>/send`.
-- Provide the SMTP\_\* variables for your real mail server.
+- Provide `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` and `SMTP_INSECURE` for your real mail server.
 
 ### Building locally
 
