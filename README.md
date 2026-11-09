@@ -40,7 +40,7 @@ docker pull ghcr.io/pecatatoshev/smtp-over-http/smtp2http:latest
 | --------------- | ------------------------------- |
 | `latest`        | the `main` branch               |
 | `sha-<commit>`  | every push                      |
-| `1.2.3`, `1.2`  | a `v1.2.3` git tag              |
+| `1.2`           | a `v1.2` git tag                |
 
 ## Why
 
