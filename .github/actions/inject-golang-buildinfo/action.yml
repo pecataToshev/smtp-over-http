@@ -1,0 +1,37 @@
+name: Inject Build Metadata
+description: Generates buildinfo.go at repo root and copies it to all specified destinations.
+
+inputs:
+  destinations:
+    description: Space-separated list of destination paths (relative to repo root) to copy buildinfo.go into.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Generate and distribute buildinfo.go
+      shell: sh
+      run: |
+        BUILD_INFO_FILE="buildinfo.go.${{ github.sha }}"
+        cat << EOF > ${BUILD_INFO_FILE}
+        package buildinfo
+
+        const (
+        	Commit    = "$(echo ${{ github.sha }} | cut -c1-7)"
+        	BuildTime = "$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+        	Source    = "${{ github.ref_name }}"
+        )
+        EOF
+
+        echo "BUILD_INFO_FILE: ${BUILD_INFO_FILE}"
+        echo ----------------------------
+        cat ${BUILD_INFO_FILE}
+        echo ----------------------------
+
+        for dest in ${{ inputs.destinations }}; do
+          echo "Copying ${BUILD_INFO_FILE} -> $dest"
+          cp -f ${BUILD_INFO_FILE} "$dest"
+        done
+
+        rm -f ${BUILD_INFO_FILE}
+        echo "Cleaned up ${BUILD_INFO_FILE}"
