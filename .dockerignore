@@ -1,0 +1,23 @@
+# Git and VCS
+.git
+.gitignore
+
+# Docs and local env (keep example)
+README.md
+*.md
+.env
+.env.*
+
+# Build / test artifacts
+**/*.test
+**/*.out
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
